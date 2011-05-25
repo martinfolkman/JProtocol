@@ -3,7 +3,7 @@ package org.jprotocol.example.dsl;
 import org.jprotocol.framework.dsl.ProtocolLayoutFactory;
 
 public class MyLeafProtocolB extends ProtocolLayoutFactory {
-	protected MyLeafProtocolB() {
+	public MyLeafProtocolB() {
 		super("MyLeafProtocolB");
 		protocols(
 		  request(

@@ -3,7 +3,7 @@ package org.jprotocol.example.dsl;
 import org.jprotocol.framework.dsl.ProtocolLayoutFactory;
 
 public class MyMiddleProtocolB extends ProtocolLayoutFactory {
-	protected MyMiddleProtocolB() {
+	public MyMiddleProtocolB() {
 		super("MyMiddleProtocolB");
 		protocols(
 		  request(

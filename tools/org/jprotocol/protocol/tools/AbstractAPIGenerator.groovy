@@ -31,16 +31,15 @@ abstract public class AbstractAPIGenerator  extends JavaGenerator {
      * Override this to add additional import statements
      */
     def additionalImports() {
-    	line 'import com.sjm.protocol.framework.test.ITestable'
+    	line 'import org.jprotocol.framework.test.ITestable'
     }
     
     def generate() {
         stdPackage()
-        line 'import com.sjm.protocol.framework.api.*'
-        line 'import com.sjm.protocol.framework.dsl.*'
-		line 'import com.sjm.protocol.framework.api.APICommand'
+        line 'import org.jprotocol.framework.api.*'
+        line 'import org.jprotocol.framework.dsl.*'
         if (hasQuantity()) {
-        	line 'import com.sjm.tools.quantity.Quantity'
+        	line 'import org.jprotocol.quantity.Quantity'
         }
         line 'import java.util.Iterator'
         additionalImports()
@@ -51,17 +50,17 @@ abstract public class AbstractAPIGenerator  extends JavaGenerator {
         }
         simpleline(/@SuppressWarnings("all")/)
 		def impl = getInterfaceType(name).equals("")? "": " implements " + getInterfaceType(name)
-        block("public class ${name} extends AbstractDecoratedProtocol${impl}") {
+        block("public class ${name} extends AbstractDecoratedProtocolMessage${impl}") {
             line (/public static final String NAME = "${protocol.name}"/)
             line "private final ${name} parent"
             
-            block("public ${name}(IProtocolType type)") {
-                line "this(new Protocol(type, false))"
+            block("public ${name}(IProtocolLayoutType type)") {
+                line "this(new ProtocolMessage(type, false))"
             }
-            block("public ${name}(IProtocol protocol)") {
+            block("public ${name}(IProtocolMessage protocol)") {
                 line "this(protocol, false)"
             }
-            block("private ${name}(IProtocol protocol, boolean strBuilder)") {
+            block("private ${name}(IProtocolMessage protocol, boolean strBuilder)") {
                 line "super(protocol, strBuilder)"
                 line "this.parent = this"
             }
@@ -69,13 +68,13 @@ abstract public class AbstractAPIGenerator  extends JavaGenerator {
             additionalConstructors()
             
             
-            block("static ${testConstr} createTest(StringBuilderProtocol protocol)") {
+            block("static ${testConstr} createTest(StringBuilderProtocolMessage protocol)") {
                 line ("return new ${testConstr}(protocol)")
             }
 
             block("public static class ${testConstr} extends ${name}") {
 				additionalTestConstructors()
-                block("${testConstr}(StringBuilderProtocol protocol)") {
+                block("${testConstr}(StringBuilderProtocolMessage protocol)") {
                     line "super(protocol, true)"
                 }
             }
@@ -119,10 +118,10 @@ abstract public class AbstractAPIGenerator  extends JavaGenerator {
         		line (/return new ${argName}(parent, protocol, indexes)/)
         	}
         }
-        block("public static class ${argName} extends AbstractDecoratedArg") {
+        block("public static class ${argName} extends AbstractDecoratedArgument") {
             line (/public static final String ${argName}_ArgName = "${arg.name}"/)
             line "private final ${name} parent"
-            block("${argName}(${name} parent, IProtocol protocol, int...indexes)") {
+            block("${argName}(${name} parent, IProtocolMessage protocol, int...indexes)") {
                 line (/super(protocol, "${arg.name}", indexes)/)
                 line "this.parent = parent"
             }

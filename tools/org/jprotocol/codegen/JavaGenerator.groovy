@@ -36,7 +36,7 @@ class JavaGenerator {
   		File f = new File("${path}/${pack.replace('.', '/')}")
   		f.mkdirs()
   		f = new File(f, "${name}.${ext}")
-  		makeWritable(f)
+//  		makeWritable(f)
 	  	def out = new FileWriter(f)
   		try {
 		  	out << result

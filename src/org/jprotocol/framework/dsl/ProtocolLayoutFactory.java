@@ -25,6 +25,9 @@ abstract public class ProtocolLayoutFactory extends AbstractMemoryLayoutFactory 
     private IProtocolLayoutType request;
     private IProtocolLayoutType response;
     
+    protected ProtocolLayoutFactory(String name) {
+        super(name, false);
+    }
     /**
      * @param includePayload include payload or sub protocols
      */
