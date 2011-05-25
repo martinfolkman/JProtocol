@@ -92,6 +92,8 @@ public class MyRootProtocol_Request_API extends AbstractDecoratedProtocolMessage
             _setBitValue(value, indexes);
             return parent;
         }
+        public static interface RootSwitch_Command extends APICommand<MyRootProtocol_Request_API> {
+        }
         public static final int A = 0;
         public static final String A_NAME = "A";
         /**
@@ -104,6 +106,9 @@ public class MyRootProtocol_Request_API extends AbstractDecoratedProtocolMessage
         public MyRootProtocol_Request_API setA() {
             _setValue("A", indexes);
             return parent;
+        }
+        public static RootSwitch_Command getA_Command() {
+            return new RootSwitch_Command() { @Override public MyRootProtocol_Request_API execute(MyRootProtocol_Request_API target) { target.getProtocol().setValue("RootSwitch", "A"); return target; }};
         }
         public static final int B = 1;
         public static final String B_NAME = "B";
@@ -118,5 +123,14 @@ public class MyRootProtocol_Request_API extends AbstractDecoratedProtocolMessage
             _setValue("B", indexes);
             return parent;
         }
+        public static RootSwitch_Command getB_Command() {
+            return new RootSwitch_Command() { @Override public MyRootProtocol_Request_API execute(MyRootProtocol_Request_API target) { target.getProtocol().setValue("RootSwitch", "B"); return target; }};
+        }
+    }
+    public <T extends APICommand<MyRootProtocol_Request_API>> MyRootProtocol_Request_API execute(T...commands) {
+        for (APICommand<MyRootProtocol_Request_API> c: commands) {
+            c.execute(this);
+        }
+        return this;
     }
 }

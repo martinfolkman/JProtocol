@@ -29,4 +29,10 @@ public class MyLeafProtocolA_Response_API extends AbstractDecoratedProtocolMessa
             super(protocol, true);
         }
     }
+    public <T extends APICommand<MyLeafProtocolA_Response_API>> MyLeafProtocolA_Response_API execute(T...commands) {
+        for (APICommand<MyLeafProtocolA_Response_API> c: commands) {
+            c.execute(this);
+        }
+        return this;
+    }
 }

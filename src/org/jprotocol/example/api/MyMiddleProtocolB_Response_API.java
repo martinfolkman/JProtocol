@@ -29,4 +29,10 @@ public class MyMiddleProtocolB_Response_API extends AbstractDecoratedProtocolMes
             super(protocol, true);
         }
     }
+    public <T extends APICommand<MyMiddleProtocolB_Response_API>> MyMiddleProtocolB_Response_API execute(T...commands) {
+        for (APICommand<MyMiddleProtocolB_Response_API> c: commands) {
+            c.execute(this);
+        }
+        return this;
+    }
 }

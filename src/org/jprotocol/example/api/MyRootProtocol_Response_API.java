@@ -29,4 +29,10 @@ public class MyRootProtocol_Response_API extends AbstractDecoratedProtocolMessag
             super(protocol, true);
         }
     }
+    public <T extends APICommand<MyRootProtocol_Response_API>> MyRootProtocol_Response_API execute(T...commands) {
+        for (APICommand<MyRootProtocol_Response_API> c: commands) {
+            c.execute(this);
+        }
+        return this;
+    }
 }

@@ -49,6 +49,8 @@ public class MyMiddleProtocolA_Request_API extends AbstractDecoratedProtocolMess
             _setBitValue(value, indexes);
             return parent;
         }
+        public static interface MiddleHeader_Command extends APICommand<MyMiddleProtocolA_Request_API> {
+        }
         public static final int X = 1;
         public static final String X_NAME = "X";
         /**
@@ -62,6 +64,9 @@ public class MyMiddleProtocolA_Request_API extends AbstractDecoratedProtocolMess
             _setValue("X", indexes);
             return parent;
         }
+        public static MiddleHeader_Command getX_Command() {
+            return new MiddleHeader_Command() { @Override public MyMiddleProtocolA_Request_API execute(MyMiddleProtocolA_Request_API target) { target.getProtocol().setValue("MiddleHeader", "X"); return target; }};
+        }
         public static final int Z = 2;
         public static final String Z_NAME = "Z";
         /**
@@ -74,6 +79,9 @@ public class MyMiddleProtocolA_Request_API extends AbstractDecoratedProtocolMess
         public MyMiddleProtocolA_Request_API setZ() {
             _setValue("Z", indexes);
             return parent;
+        }
+        public static MiddleHeader_Command getZ_Command() {
+            return new MiddleHeader_Command() { @Override public MyMiddleProtocolA_Request_API execute(MyMiddleProtocolA_Request_API target) { target.getProtocol().setValue("MiddleHeader", "Z"); return target; }};
         }
     }
     /**
@@ -96,6 +104,8 @@ public class MyMiddleProtocolA_Request_API extends AbstractDecoratedProtocolMess
             _setBitValue(value, indexes);
             return parent;
         }
+        public static interface MiddleSwitch_Command extends APICommand<MyMiddleProtocolA_Request_API> {
+        }
         public static final int A = 1;
         public static final String A_NAME = "A";
         /**
@@ -108,6 +118,9 @@ public class MyMiddleProtocolA_Request_API extends AbstractDecoratedProtocolMess
         public MyMiddleProtocolA_Request_API setA() {
             _setValue("A", indexes);
             return parent;
+        }
+        public static MiddleSwitch_Command getA_Command() {
+            return new MiddleSwitch_Command() { @Override public MyMiddleProtocolA_Request_API execute(MyMiddleProtocolA_Request_API target) { target.getProtocol().setValue("MiddleSwitch", "A"); return target; }};
         }
         public static final int B = 2;
         public static final String B_NAME = "B";
@@ -122,5 +135,14 @@ public class MyMiddleProtocolA_Request_API extends AbstractDecoratedProtocolMess
             _setValue("B", indexes);
             return parent;
         }
+        public static MiddleSwitch_Command getB_Command() {
+            return new MiddleSwitch_Command() { @Override public MyMiddleProtocolA_Request_API execute(MyMiddleProtocolA_Request_API target) { target.getProtocol().setValue("MiddleSwitch", "B"); return target; }};
+        }
+    }
+    public <T extends APICommand<MyMiddleProtocolA_Request_API>> MyMiddleProtocolA_Request_API execute(T...commands) {
+        for (APICommand<MyMiddleProtocolA_Request_API> c: commands) {
+            c.execute(this);
+        }
+        return this;
     }
 }

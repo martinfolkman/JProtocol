@@ -72,4 +72,10 @@ public class MyLeafProtocolA_Request_API extends AbstractDecoratedProtocolMessag
             return parent;
         }
     }
+    public <T extends APICommand<MyLeafProtocolA_Request_API>> MyLeafProtocolA_Request_API execute(T...commands) {
+        for (APICommand<MyLeafProtocolA_Request_API> c: commands) {
+            c.execute(this);
+        }
+        return this;
+    }
 }

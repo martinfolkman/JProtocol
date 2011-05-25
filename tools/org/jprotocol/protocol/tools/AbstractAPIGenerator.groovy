@@ -81,12 +81,12 @@ abstract public class AbstractAPIGenerator  extends JavaGenerator {
             
             genArgs()
 			//TODO
-//			block("public <T extends APICommand<${name}>> $name execute(T...commands)") {
-//				block("for (APICommand<${name}> c: commands)") {
-//					line "c.execute(this)"
-//				}
-//				line "return this"
-//			}
+			block("public <T extends APICommand<${name}>> $name execute(T...commands)") {
+				block("for (APICommand<${name}> c: commands)") {
+					line "c.execute(this)"
+				}
+				line "return this"
+			}
         }
     }
     
@@ -131,8 +131,8 @@ abstract public class AbstractAPIGenerator  extends JavaGenerator {
                 genGetSetMethods("Bit")
                 if (arg.isEnumType()) {
                     //TODO
-//                	block("public static interface ${argName}_Command extends APICommand<${name}>") {
-//                	}
+                	block("public static interface ${argName}_Command extends APICommand<${name}>") {
+                	}
                     genEnumValues(arg, argName, parents)
                 } else {
                     genGetSetMethods("")
@@ -297,9 +297,9 @@ abstract public class AbstractAPIGenerator  extends JavaGenerator {
                 line "return parent"
             }
             //TODO
-//            block("public static ${argName}_Command get${vName}_Command()") {
-//            	line(/return new ${argName}_Command() { @Override public $name execute(${name} target) { target.getProtocol().setValue("${argName}", "${vName}"); return target; }}/) 
-//            }
+            block("public static ${argName}_Command get${vName}_Command()") {
+            	line(/return new ${argName}_Command() { @Override public $name execute(${name} target) { target.getProtocol().setValue("${argName}", "${vName}"); return target; }}/) 
+            }
             v.argTypes.each { subArg -> 
                 genArg(subArg, parents)
             }
