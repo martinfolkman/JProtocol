@@ -10,7 +10,10 @@ public class MyRootProtocol extends ProtocolLayoutFactory {
 			argInt("RootHeaderA", offset(0)),
 			argByte("RootSwitch", 4, value("A", 0), value("B", 1))
 		  ), 
-		  response()
+		  response(
+			argInt("RootHeaderA", offset(0)),
+			argByte("RootSwitchResp", 4, value("A", 0), value("B", 1))
+		  )
 		);
 	}
 	

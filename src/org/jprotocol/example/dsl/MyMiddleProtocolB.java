@@ -10,7 +10,10 @@ public class MyMiddleProtocolB extends ProtocolLayoutFactory {
 			argByte("MiddleHeader", offset(0), value("X", 1), value("Z", 2)),
 			argByte("MiddleSwitch", offset(0), value("A", 1), value("B", 2))
 		  ), 
-		  response()
+		  response(
+			argByte("MiddleHeader", offset(0), value("X", 1), value("Z", 2)),
+			argByte("MiddleSwitch", offset(0), value("A", 1), value("B", 2))
+		  )
 		);
 	}
 	

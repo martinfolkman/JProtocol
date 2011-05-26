@@ -1,6 +1,7 @@
 package org.jprotocol.example.api;
 import org.jprotocol.framework.api.*;
 import org.jprotocol.framework.dsl.*;
+import org.jprotocol.quantity.Quantity;
 import java.util.Iterator;
 import org.jprotocol.framework.test.ITestable;
 /**
@@ -27,6 +28,103 @@ public class MyRootProtocol_Response_API extends AbstractDecoratedProtocolMessag
     public static class MyRootProtocol_Response_API_Test extends MyRootProtocol_Response_API {
         MyRootProtocol_Response_API_Test(StringBuilderProtocolMessage protocol) {
             super(protocol, true);
+        }
+    }
+    /**
+    * Argument: RootHeaderA
+    */
+    public RootHeaderA getRootHeaderA() {
+        return new RootHeaderA(parent, protocol);
+    }
+    public static class RootHeaderA extends AbstractDecoratedArgument {
+        public static final String RootHeaderA_ArgName = "RootHeaderA";
+        private final MyRootProtocol_Response_API parent;
+        RootHeaderA(MyRootProtocol_Response_API parent, IProtocolMessage protocol, int...indexes) {
+            super(protocol, "RootHeaderA", indexes);
+            this.parent = parent;
+        }
+        public int getBitValue() {
+            return _getBitValue(indexes);
+        }
+        public MyRootProtocol_Response_API setBitValue(int value) {
+            _setBitValue(value, indexes);
+            return parent;
+        }
+        public int getValue() {
+            return _getValue(indexes);
+        }
+        public MyRootProtocol_Response_API setValue(int value) {
+            _setValue(value + "", indexes);
+            return parent;
+        }
+        public Quantity getRealQuantity() {
+            return _getRealQuantity(indexes);
+        }
+        public MyRootProtocol_Response_API setRealQuantity(Quantity value) {
+            _setRealQuantity(value, indexes);
+            return parent;
+        }
+        public double getRealValue() {
+            return _getRealValue(indexes);
+        }
+        public MyRootProtocol_Response_API setRealValue(double value) {
+            _setRealValue(value, indexes);
+            return parent;
+        }
+    }
+    /**
+    * Argument: RootSwitchResp
+    */
+    public RootSwitchResp getRootSwitchResp() {
+        return new RootSwitchResp(parent, protocol);
+    }
+    public static class RootSwitchResp extends AbstractDecoratedArgument {
+        public static final String RootSwitchResp_ArgName = "RootSwitchResp";
+        private final MyRootProtocol_Response_API parent;
+        RootSwitchResp(MyRootProtocol_Response_API parent, IProtocolMessage protocol, int...indexes) {
+            super(protocol, "RootSwitchResp", indexes);
+            this.parent = parent;
+        }
+        public int getBitValue() {
+            return _getBitValue(indexes);
+        }
+        public MyRootProtocol_Response_API setBitValue(int value) {
+            _setBitValue(value, indexes);
+            return parent;
+        }
+        public static interface RootSwitchResp_Command extends APICommand<MyRootProtocol_Response_API> {
+        }
+        public static final int A = 0;
+        public static final String A_NAME = "A";
+        /**
+        */
+        public boolean isA() {
+            return _isValue("A", indexes);
+        }
+        /**
+        */
+        public MyRootProtocol_Response_API setA() {
+            _setValue("A", indexes);
+            return parent;
+        }
+        public static RootSwitchResp_Command getA_Command() {
+            return new RootSwitchResp_Command() { @Override public MyRootProtocol_Response_API execute(MyRootProtocol_Response_API target) { target.getProtocol().setValue("RootSwitchResp", "A"); return target; }};
+        }
+        public static final int B = 1;
+        public static final String B_NAME = "B";
+        /**
+        */
+        public boolean isB() {
+            return _isValue("B", indexes);
+        }
+        /**
+        */
+        public MyRootProtocol_Response_API setB() {
+            _setValue("B", indexes);
+            return parent;
+        }
+        public static RootSwitchResp_Command getB_Command() {
+            return new RootSwitchResp_Command() { @Override public MyRootProtocol_Response_API execute(MyRootProtocol_Response_API target) { target.getProtocol().setValue("RootSwitchResp", "B"); return target; }};
         }
     }
     public <T extends APICommand<MyRootProtocol_Response_API>> MyRootProtocol_Response_API execute(T...commands) {
