@@ -22,6 +22,9 @@ public class MyRootProtocol_Request_API extends AbstractDecoratedProtocolMessage
         super(protocol, strBuilder);
         this.parent = this;
     }
+    static MyRootProtocol_Request_API_Test createTest() {
+        return new MyRootProtocol_Request_API_Test(new StringBuilderProtocolMessage(new org.jprotocol.example.dsl.MyRootProtocol().getRequestProtocol()));
+    }
     static MyRootProtocol_Request_API_Test createTest(StringBuilderProtocolMessage protocol) {
         return new MyRootProtocol_Request_API_Test(protocol);
     }

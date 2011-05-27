@@ -21,6 +21,9 @@ public class MyMiddleProtocolB_Response_API extends AbstractDecoratedProtocolMes
         super(protocol, strBuilder);
         this.parent = this;
     }
+    static MyMiddleProtocolB_Response_API_Test createTest() {
+        return new MyMiddleProtocolB_Response_API_Test(new StringBuilderProtocolMessage(new org.jprotocol.example.dsl.MyMiddleProtocolB().getRequestProtocol()));
+    }
     static MyMiddleProtocolB_Response_API_Test createTest(StringBuilderProtocolMessage protocol) {
         return new MyMiddleProtocolB_Response_API_Test(protocol);
     }

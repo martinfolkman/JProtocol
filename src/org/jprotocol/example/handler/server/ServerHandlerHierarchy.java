@@ -11,7 +11,7 @@ import org.jprotocol.framework.test.ProtocolMockery;
 
 public class ServerHandlerHierarchy extends AbstractHandlerHierarchy {
 
-	private final ProtocolMockery mockery;
+	public final ProtocolMockery mockery;
 	private final IProtocolState protocolState;
 	private final boolean msbFirst;
 	private final MyRootProtocolServerHandler root;
