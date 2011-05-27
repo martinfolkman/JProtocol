@@ -1,4 +1,4 @@
-package org.jprotocol.example.handler.server;
+package org.jprotocol.example.handler.client;
 
 import org.jprotocol.example.handler.AbstractHandlerHierarchy;
 import org.jprotocol.framework.dsl.IProtocolMessage;
@@ -10,19 +10,19 @@ import org.jprotocol.framework.handler.IProtocolState;
 import org.jprotocol.framework.handler.ProtocolState;
 import org.jprotocol.framework.test.ProtocolMockery;
 
-public class ServerHandlerHierarchy extends AbstractHandlerHierarchy {
+public class ClientHandlerHierarchy extends AbstractHandlerHierarchy {
 
 	public final ProtocolMockery mockery;
 	private final IProtocolState protocolState;
 	private final boolean msbFirst;
-	private final MyRootProtocolServerHandler root;
+	private final MyRootProtocolClientHandler root;
 	private final Sniffer sniffer;
 
-	public ServerHandlerHierarchy(IFlushable flushable) {
+	public ClientHandlerHierarchy(IFlushable flushable) {
 		this.msbFirst = false;
 		this.protocolState = new ProtocolState();
 		this.sniffer = new Sniffer();
-		this.root = new MyRootProtocolServerHandler(flushable, msbFirst, protocolState, sniffer);
+		this.root = new MyRootProtocolClientHandler(flushable, msbFirst, protocolState, sniffer);
 		this.mockery = new ProtocolMockery(root, null, true);
 		sniffer.init(mockery);
 		init();
@@ -34,22 +34,22 @@ public class ServerHandlerHierarchy extends AbstractHandlerHierarchy {
 
 	@Override
 	protected Handler<?, ?> createLeafB() {
-		return new MyLeafProtocolBServerHandler(msbFirst, protocolState, sniffer);
+		return new MyLeafProtocolBClientHandler(msbFirst, protocolState, sniffer);
 	}
 
 	@Override
 	protected Handler<?, ?> createMiddleB() {
-		return new MyMiddleProtocolBServerHandler(msbFirst, protocolState, sniffer);
+		return new MyMiddleProtocolBClientHandler(msbFirst, protocolState, sniffer);
 	}
 
 	@Override
 	protected Handler<?, ?> createLeafA() {
-		return new MyLeafProtocolAServerHandler(msbFirst, protocolState, sniffer);
+		return new MyLeafProtocolAClientHandler(msbFirst, protocolState, sniffer);
 	}
 
 	@Override
 	protected Handler<?, ?> createMiddleA() {
-		return new MyMiddleProtocolAServerHandler(msbFirst, protocolState, sniffer);
+		return new MyMiddleProtocolAClientHandler(msbFirst, protocolState, sniffer);
 	}
 	public void receive(byte[] data) {
 		root.receive(data);

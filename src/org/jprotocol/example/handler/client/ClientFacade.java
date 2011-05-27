@@ -1,18 +1,18 @@
-package org.jprotocol.example.handler.server;
+package org.jprotocol.example.handler.client;
 
 import org.jprotocol.example.api.RequestAPIFactory;
 import org.jprotocol.example.api.ResponseAPIFactory;
-import org.jprotocol.framework.facade.AbstractServerFacade;
+import org.jprotocol.framework.facade.AbstractClientFacade;
 import org.jprotocol.framework.handler.IFlushable;
 import org.jprotocol.framework.test.ProtocolMockery;
 
-public class ServerFacade extends AbstractServerFacade {
-	private final ServerHandlerHierarchy hierarchy;
+public class ClientFacade extends AbstractClientFacade {
+	private final ClientHandlerHierarchy hierarchy;
 	private final RequestAPIFactory requestFactory;
 	private final ResponseAPIFactory responseFactory;
 
-	public ServerFacade(IFlushable flushable) {
-		hierarchy = new ServerHandlerHierarchy(flushable);
+	public ClientFacade(IFlushable flushable) {
+		hierarchy = new ClientHandlerHierarchy(flushable);
 		requestFactory = new RequestAPIFactory();
 		responseFactory = new ResponseAPIFactory();
 	}

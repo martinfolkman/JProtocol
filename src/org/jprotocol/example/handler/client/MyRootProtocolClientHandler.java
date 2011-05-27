@@ -1,6 +1,5 @@
-package org.jprotocol.example.handler.server;
+package org.jprotocol.example.handler.client;
 
-import org.jprotocol.example.api.MyRootProtocol_Request_API;
 import org.jprotocol.example.api.MyRootProtocol_Response_API;
 import org.jprotocol.example.handler.AbstractMyRootProtocolHandler;
 import org.jprotocol.framework.dsl.IProtocolMessage;
@@ -8,12 +7,12 @@ import org.jprotocol.framework.handler.IFlushable;
 import org.jprotocol.framework.handler.IProtocolSniffer;
 import org.jprotocol.framework.handler.IProtocolState;
 
-public class MyRootProtocolServerHandler extends AbstractMyRootProtocolHandler {
+public class MyRootProtocolClientHandler extends AbstractMyRootProtocolHandler {
 
 	private final IFlushable flushable;
 
-	protected MyRootProtocolServerHandler(IFlushable flushable, boolean msbFirst, IProtocolState protocolState, IProtocolSniffer sniffer) {
-		super(Type.Server, msbFirst, MyRootProtocol_Request_API.RootSwitch.RootSwitch_ArgName, 0, 0, protocolState, sniffer);
+	protected MyRootProtocolClientHandler(IFlushable flushable, boolean msbFirst, IProtocolState protocolState, IProtocolSniffer sniffer) {
+		super(Type.Client, msbFirst, MyRootProtocol_Response_API.RootSwitchResp.RootSwitchResp_ArgName, 0, 0, protocolState, sniffer);
 		this.flushable = flushable;
 	}
 
