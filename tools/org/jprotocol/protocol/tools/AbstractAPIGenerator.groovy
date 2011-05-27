@@ -38,6 +38,7 @@ abstract public class AbstractAPIGenerator  extends JavaGenerator {
         stdPackage()
         line 'import org.jprotocol.framework.api.*'
         line 'import org.jprotocol.framework.dsl.*'
+		line 'import org.jprotocol.framework.test.*'
         if (hasQuantity()) {
         	line 'import org.jprotocol.quantity.Quantity'
         }
@@ -50,7 +51,7 @@ abstract public class AbstractAPIGenerator  extends JavaGenerator {
         }
         simpleline(/@SuppressWarnings("all")/)
 		def impl = getInterfaceType(name).equals("")? "": " implements " + getInterfaceType(name)
-        block("public class ${name} extends AbstractDecoratedProtocolMessage${impl}") {
+        block("public class ${name} extends AbstractDecoratedProtocolMessage implements ${protocol.direction}") {
             line (/public static final String NAME = "${protocol.name}"/)
             line "private final ${name} parent"
             

@@ -1,6 +1,6 @@
 package org.jprotocol.protocol.tools
  
-      
+       
 import org.jprotocol.codegen.JavaGenerator
 import org.jprotocol.codegen.NameFormatter
 import org.jprotocol.example.api.MyRootProtocol_Request_API;
@@ -44,6 +44,7 @@ public class DefaultAPIGenerator extends AbstractAPIGenerator {
 	} 
 
 	public String getInterfaceType(String name) {
+		println "============================================" + name
 		""
 	}
 	
@@ -61,7 +62,7 @@ class DefaultAPIFactoryGenerator extends JavaGenerator {
 				if (direction == Direction.Response) {
 					className = classNameUtil.responseApiClass
 				}
-				block("${className} ${className}()") {
+				block("public ${className} ${className}()") {
 					 line "return ${className}.createTest()"
 				}
 			} 

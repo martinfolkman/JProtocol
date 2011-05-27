@@ -4,19 +4,19 @@ package org.jprotocol.example.api;
 * @author eliasa01
 */
 public class RequestAPIFactory {
-    MyLeafProtocolA_Request_API MyLeafProtocolA_Request_API() {
+    public MyLeafProtocolA_Request_API MyLeafProtocolA_Request_API() {
         return MyLeafProtocolA_Request_API.createTest();
     }
-    MyLeafProtocolB_Request_API MyLeafProtocolB_Request_API() {
+    public MyLeafProtocolB_Request_API MyLeafProtocolB_Request_API() {
         return MyLeafProtocolB_Request_API.createTest();
     }
-    MyMiddleProtocolA_Request_API MyMiddleProtocolA_Request_API() {
+    public MyMiddleProtocolA_Request_API MyMiddleProtocolA_Request_API() {
         return MyMiddleProtocolA_Request_API.createTest();
     }
-    MyMiddleProtocolB_Request_API MyMiddleProtocolB_Request_API() {
+    public MyMiddleProtocolB_Request_API MyMiddleProtocolB_Request_API() {
         return MyMiddleProtocolB_Request_API.createTest();
     }
-    MyRootProtocol_Request_API MyRootProtocol_Request_API() {
+    public MyRootProtocol_Request_API MyRootProtocol_Request_API() {
         return MyRootProtocol_Request_API.createTest();
     }
 }

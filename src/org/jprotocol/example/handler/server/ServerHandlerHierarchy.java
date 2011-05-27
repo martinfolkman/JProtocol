@@ -9,6 +9,7 @@ import org.jprotocol.framework.handler.IProtocolSniffer;
 import org.jprotocol.framework.handler.IProtocolState;
 import org.jprotocol.framework.handler.ProtocolState;
 import org.jprotocol.framework.test.ProtocolMockery;
+import org.jprotocol.framework.test.IProtocolLogger.NullProtocolLogger;
 
 public class ServerHandlerHierarchy extends AbstractHandlerHierarchy {
 
@@ -23,9 +24,9 @@ public class ServerHandlerHierarchy extends AbstractHandlerHierarchy {
 		this.protocolState = new ProtocolState();
 		this.sniffer = new Sniffer();
 		this.root = new MyRootProtocolServerHandler(flushable, msbFirst, protocolState, sniffer);
-		this.mockery = new ProtocolMockery(root, null, true);
-		sniffer.init(mockery);
 		init();
+		this.mockery = new ProtocolMockery(root, new NullProtocolLogger(), true);
+		sniffer.init(mockery);
 	}
 	@Override
 	protected Handler<?, ?> createRoot() {
