@@ -6,12 +6,8 @@ import static org.jprotocol.framework.handler.HandlerDsl.root;
 import org.jprotocol.framework.handler.Handler;
 
 public abstract class AbstractHandlerHierarchy {
-	private final AbstractMyRootProtocolHandler root;
-	protected AbstractHandlerHierarchy(AbstractMyRootProtocolHandler root) {
-		this.root = root;
-	}
-	public void create() {
-		root(root, 
+	public void init() {
+		root(createRoot(), 
 		  handler(createMiddleA(), 
 			handler(createLeafA())
 		  ),
@@ -20,6 +16,7 @@ public abstract class AbstractHandlerHierarchy {
 		  )
 		);
 	}
+	abstract protected Handler<?, ?> createRoot();
 	abstract protected Handler<?, ?> createLeafB();
 	abstract protected Handler<?, ?> createMiddleB();
 	abstract protected Handler<?, ?> createLeafA();
