@@ -1,5 +1,5 @@
 package org.jprotocol.protocol.tools
-
+ 
       
 import org.jprotocol.codegen.JavaGenerator
 import org.jprotocol.codegen.NameFormatter
@@ -23,6 +23,8 @@ public class DefaultAPIGenerator extends AbstractAPIGenerator {
 			 new DefaultAPIGenerator(it, it.responseProtocol, pack, dir)
 			 new DefaultHandlerGenerator(it, pack, dir)
 		 }
+		 new DefaultAPIFactoryGenerator(protocolLayouts, Direction.Request, pack, dir)
+		 new DefaultAPIFactoryGenerator(protocolLayouts, Direction.Response, pack, dir)
 	}
 	
 	public DefaultAPIGenerator(factory, protocol, String pack, String dir) {
@@ -39,7 +41,7 @@ public class DefaultAPIGenerator extends AbstractAPIGenerator {
 			line "return new ${name}_Test(new StringBuilderProtocolMessage(new ${factory.class.name}().getRequestProtocol()))"
 		}
 	
-	}
+	} 
 
 	public String getInterfaceType(String name) {
 		""
@@ -47,11 +49,34 @@ public class DefaultAPIGenerator extends AbstractAPIGenerator {
 	
 }
 
+class DefaultAPIFactoryGenerator extends JavaGenerator {
+	DefaultAPIFactoryGenerator(protocolLayouts, Direction direction, pack, dir) {
+		super(pack + ".api", "${direction}APIFactory")
+		stdPackage()
+		stdJavaDoc()
+		block("public class $name") {
+			protocolLayouts.each {
+				final classNameUtil = new ClassNameUtil(it)
+				String className = classNameUtil.requestApiClass
+				if (direction == Direction.Response) {
+					className = classNameUtil.responseApiClass
+				}
+				block("${className} ${className}()") {
+					 line "return ${className}.createTest()"
+				}
+			} 
+		}
+		save(dir)
+	}
+		
+}
 class DefaultHandlerGenerator extends JavaGenerator {
 	final layout 
+	final classNameUtil
 	DefaultHandlerGenerator(layout, pack, dir) { 
 		super(pack + ".handler", "Abstract" + NameFormatter.formatName(layout.name) + "Handler")
 		this.layout = layout
+		this.classNameUtil = new ClassNameUtil(layout)
 		stdPackage()
 		line "import org.jprotocol.framework.dsl.*"
 		line "import org.jprotocol.framework.handler.*"
@@ -76,6 +101,19 @@ class DefaultHandlerGenerator extends JavaGenerator {
 		save(dir) 
 	}
 	
+	String getRequestApiClass() {
+		classNameUtil.getRequestApiClass()
+	}
+	String getResponseApiClass() { 
+		classNameUtil.getResponseApiClass()
+	}
+}
+ 
+class ClassNameUtil {
+	final layout
+	ClassNameUtil(layout) {
+		this.layout = layout
+	}
 	String getRequestApiClass() {
 		apiClassNameOf(Direction.Request)
 	}

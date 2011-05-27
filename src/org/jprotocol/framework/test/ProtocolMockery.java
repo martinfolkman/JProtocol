@@ -476,6 +476,18 @@ public class ProtocolMockery implements IProtocolSniffer {
         }        
         return result;
     }
+
+	public void expect(String expr) {
+		expect(Expr.create(expr));
+	}
+
+	public void allow(String expr) {
+		allow(Expr.create(expr));
+	}
+
+	public void send(String expr) {
+		send(Expr.create(expr));
+	}
     
 }
 
