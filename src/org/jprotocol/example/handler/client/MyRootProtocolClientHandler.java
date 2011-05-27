@@ -23,8 +23,7 @@ public class MyRootProtocolClientHandler extends AbstractMyRootProtocolHandler {
 
 	@Override
 	protected void makeHeader(IProtocolMessage header, IProtocolMessage payload, int headerValue) {
-		MyRootProtocol_Response_API response = createResponse(header);
-		//TODO
+		createRequest(header).getRootHeaderA().setBitValue(headerValue);
 	}
 
 }

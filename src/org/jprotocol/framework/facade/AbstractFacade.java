@@ -4,7 +4,7 @@ import org.jprotocol.framework.test.ProtocolMockery;
 
 abstract public class AbstractFacade {
 	public boolean isOk() {
-		return !getErrorMessage().isEmpty();
+		return getErrorMessage().isEmpty();
 	}
 	public String getErrorMessage() {
 		return getMockery().getErrorMessages();
