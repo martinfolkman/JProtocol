@@ -104,6 +104,12 @@ abstract public class Handler<R extends AbstractDecoratedProtocolMessage, S exte
         }
     }
     
+    public void setLowerHandler(ILowerHandler lowerHandler) {
+        require(notNull(lowerHandler));
+        check(isNull(this.lowerHandler));
+        this.lowerHandler = lowerHandler;
+        lowerHandler.register(headerReceiveValue, this);
+    }
     
     @Override
     public final String getHeaderFieldName() {

@@ -2,9 +2,10 @@ package org.jprotocol.example.handler.server;
 
 import org.jprotocol.example.handler.AbstractHandlerHierarchy;
 import org.jprotocol.example.handler.AbstractMyRootProtocolHandler;
+import org.jprotocol.framework.handler.Handler;
 import org.jprotocol.framework.handler.IProtocolSniffer;
 import org.jprotocol.framework.handler.IProtocolState;
-import org.jprotocol.framework.handler.RegularHandler;
+import org.jprotocol.framework.handler.ProtocolState;
 
 public class ServerHandlerHierarchy extends AbstractHandlerHierarchy {
 
@@ -15,33 +16,28 @@ public class ServerHandlerHierarchy extends AbstractHandlerHierarchy {
 	public ServerHandlerHierarchy(AbstractMyRootProtocolHandler root) {
 		super(root);
 		this.msbFirst = false;
-		this.protocolState = null;
+		this.protocolState = new ProtocolState();
 		this.sniffer = null;
-		
 	}
 
 	@Override
-	protected RegularHandler<?, ?> createLeafB() {
-		return null;
-//		return new MyLeafProtocolBServerHandler(msbFirst, protocolState, sniffer);
+	protected Handler<?, ?> createLeafB() {
+		return new MyLeafProtocolBServerHandler(msbFirst, protocolState, sniffer);
 	}
 
 	@Override
-	protected RegularHandler<?, ?> createMiddleB() {
-		// TODO Auto-generated method stub
-		return null;
+	protected Handler<?, ?> createMiddleB() {
+		return new MyMiddleProtocolBServerHandler(msbFirst, protocolState, sniffer);
 	}
 
 	@Override
-	protected RegularHandler<?, ?> createLeafA() {
-		// TODO Auto-generated method stub
-		return null;
+	protected Handler<?, ?> createLeafA() {
+		return new MyLeafProtocolAServerHandler(msbFirst, protocolState, sniffer);
 	}
 
 	@Override
-	protected RegularHandler<?, ?> createMiddleA() {
-		// TODO Auto-generated method stub
-		return null;
+	protected Handler<?, ?> createMiddleA() {
+		return new MyMiddleProtocolAServerHandler(msbFirst, protocolState, sniffer);
 	}
 
 }

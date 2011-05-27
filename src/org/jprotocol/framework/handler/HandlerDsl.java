@@ -12,7 +12,7 @@ public class HandlerDsl {
         return root;
     }
 
-    public static UpperHandler handler(RegularHandler<?, ?> handler, UpperHandler...upperHandlers) {
+    public static UpperHandler handler(Handler<?, ?> handler, UpperHandler...upperHandlers) {
         UpperHandler uh = new UpperHandler(handler);
         setLowerHandler(handler, upperHandlers);
         return uh;
@@ -27,9 +27,9 @@ public class HandlerDsl {
     }
 
     public static class UpperHandler {
-        final RegularHandler<?, ?> handler;
+        final Handler<?, ?> handler;
 
-        UpperHandler(RegularHandler<?, ?> handler) {
+        UpperHandler(Handler<?, ?> handler) {
             this.handler = handler;
         }
     }
