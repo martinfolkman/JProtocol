@@ -3,6 +3,7 @@ package org.jprotocol.example.handler.server;
 import org.jprotocol.example.handler.AbstractHandlerHierarchy;
 import org.jprotocol.framework.dsl.IProtocolMessage;
 import org.jprotocol.framework.handler.Handler;
+import org.jprotocol.framework.handler.Handler.Type;
 import org.jprotocol.framework.handler.IFlushable;
 import org.jprotocol.framework.handler.IHandler;
 import org.jprotocol.framework.handler.IProtocolSniffer;
@@ -54,6 +55,10 @@ public class ServerHandlerHierarchy extends AbstractHandlerHierarchy {
 	}
 	public void receive(byte[] data) {
 		root.receive(data);
+	}
+	@Override
+	protected Type getType() {
+		return Type.Server;
 	}
 
 

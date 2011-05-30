@@ -4,6 +4,7 @@ import static org.jprotocol.framework.handler.HandlerDsl.handler;
 import static org.jprotocol.framework.handler.HandlerDsl.root;
 
 import org.jprotocol.framework.handler.Handler;
+import org.jprotocol.framework.handler.Handler.Type;
 
 public abstract class AbstractHandlerHierarchy {
 	public void init() {
@@ -21,4 +22,7 @@ public abstract class AbstractHandlerHierarchy {
 	abstract protected Handler<?, ?> createMiddleB();
 	abstract protected Handler<?, ?> createLeafA();
 	abstract protected Handler<?, ?> createMiddleA();
+	
+	
+	abstract protected Type getType();
 }
