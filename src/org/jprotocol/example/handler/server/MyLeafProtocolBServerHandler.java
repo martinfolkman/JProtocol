@@ -8,7 +8,6 @@ import org.jprotocol.example.handler.AbstractMyLeafProtocolBHandler;
 import org.jprotocol.framework.dsl.IProtocolMessage;
 import org.jprotocol.framework.handler.IProtocolSniffer;
 import org.jprotocol.framework.handler.IProtocolState;
-import org.jprotocol.framework.handler.IUpperHandler;
 
 public class MyLeafProtocolBServerHandler extends AbstractMyLeafProtocolBHandler {
 
@@ -22,9 +21,6 @@ public class MyLeafProtocolBServerHandler extends AbstractMyLeafProtocolBHandler
 
 	@Override
 	protected void makeHeader(IProtocolMessage header, IProtocolMessage payload, int headerValue) {
-	}
-	@Override
-    protected void notifyUpperHandler(IProtocolMessage p, IUpperHandler uh) {
 	}
     protected void unsupportedProtocol(IProtocolMessage p) {
         //
