@@ -43,7 +43,8 @@ abstract public class Handler<R extends AbstractDecoratedProtocolMessage, S exte
     }
     private final static IProtocolSniffer nullSniffer = new NullProtocolSniffer(); 
     private final IProtocolSniffer sniffer;
-    private final String uperHeaderFieldName;
+    private final String upperHeaderReceiveFieldName;
+	private final String upperHeaderSendFieldName;
     protected final IProtocolLayoutFactory factory;
     private final Type type;
     protected final boolean msbFirst;
@@ -63,7 +64,16 @@ abstract public class Handler<R extends AbstractDecoratedProtocolMessage, S exte
     private S lastResponse;
     private boolean active = true;
     
-    
+    protected Handler(IProtocolLayoutFactory factory, 
+            Type type, 
+            boolean msbFirst, 
+            String upperHeaderFieldName, 
+            int lowerHeaderRequestValue, 
+            int lowerHeaderResponseValue, 
+            IProtocolState protocolState,
+            IProtocolSniffer sniffer) {
+    	this(factory, type, msbFirst, upperHeaderFieldName, upperHeaderFieldName, lowerHeaderRequestValue, lowerHeaderResponseValue, protocolState, sniffer);
+    }    
     /**
      * 
      * @param factory
@@ -77,6 +87,7 @@ abstract public class Handler<R extends AbstractDecoratedProtocolMessage, S exte
                       Type type, 
                       boolean msbFirst, 
                       String upperHeaderRequestFieldName, 
+                      String upperHeaderResponseFieldName,
                       int lowerHeaderRequestValue, 
                       int lowerHeaderResponseValue, 
                       IProtocolState protocolState,
@@ -86,12 +97,15 @@ abstract public class Handler<R extends AbstractDecoratedProtocolMessage, S exte
         this.factory = factory;
         this.type = type;
         this.msbFirst = msbFirst;
-        this.uperHeaderFieldName = upperHeaderRequestFieldName;
         if (isServer()) {
+            this.upperHeaderReceiveFieldName = upperHeaderRequestFieldName;
+            this.upperHeaderSendFieldName = upperHeaderResponseFieldName;
             this.headerReceiveValue = lowerHeaderRequestValue;
             this.headerSendValue = lowerHeaderResponseValue;
         } else {
         	check(isClient());
+            this.upperHeaderReceiveFieldName = upperHeaderResponseFieldName;
+            this.upperHeaderSendFieldName = upperHeaderRequestFieldName;
             this.headerReceiveValue = lowerHeaderResponseValue;
             this.headerSendValue = lowerHeaderRequestValue;
         }
@@ -113,7 +127,7 @@ abstract public class Handler<R extends AbstractDecoratedProtocolMessage, S exte
     
     @Override
     public final String getHeaderFieldName() {
-        return uperHeaderFieldName;
+        return upperHeaderReceiveFieldName;
     }
     
     @Override public final IProtocolLayoutFactory getFactory() {
@@ -243,13 +257,13 @@ abstract public class Handler<R extends AbstractDecoratedProtocolMessage, S exte
     public void register(int upperHandlerValue, IUpperHandler handler) {
         require(notNull(handler));
         try {
-            if (uperHeaderFieldName != null) {
-                receiveType().argOf(uperHeaderFieldName).nvpOf(upperHandlerValue);
+            if (upperHeaderReceiveFieldName != null) {
+                receiveType().argOf(upperHeaderReceiveFieldName).nvpOf(upperHandlerValue);
             }
         } catch (IllegalByteArrayValue e) {
             neverGetHere(e.getMessage());
         }
-        check(isNull(upperHandlerOf(upperHandlerValue)), "Protocol: ", factory, " field : ", uperHeaderFieldName, "value: 0x", Integer.toHexString(upperHandlerValue));
+        check(isNull(upperHandlerOf(upperHandlerValue)), "Protocol: ", factory, " field : ", upperHeaderReceiveFieldName, "value: 0x", Integer.toHexString(upperHandlerValue));
         addHandler(upperHandlerValue, handler);
     }
 
@@ -280,8 +294,8 @@ abstract public class Handler<R extends AbstractDecoratedProtocolMessage, S exte
             } catch (InhibitException e) {
                 // On inhibit Exception receiveRequest should not be called
             }
-            if (uperHeaderFieldName != null) {
-                notifyUpperHandler(p, upperHandlerOf(p.getValueAsNameValuePair(uperHeaderFieldName).getValue()));
+            if (upperHeaderReceiveFieldName != null) {
+                notifyUpperHandler(p, upperHandlerOf(p.getValueAsNameValuePair(upperHeaderReceiveFieldName).getValue()));
             } else {
                 notifyUpperHandler(p, upperHandlerOf(0));
             }
@@ -304,10 +318,10 @@ abstract public class Handler<R extends AbstractDecoratedProtocolMessage, S exte
     @Override
     public final String switchValueStrOf(IUpperHandler uh) {
     	check(getUpperHandlerList().contains(uh));
-    	if (uperHeaderFieldName == null) return "";
+    	if (upperHeaderReceiveFieldName == null) return "";
     	Integer v = switchValueOf(uh);
     	if (v == null) return "";
-    	return receiveType().argOf(uperHeaderFieldName).nvpOf(v).getName();
+    	return receiveType().argOf(upperHeaderReceiveFieldName).nvpOf(v).getName();
     }
     
     @Override
@@ -341,10 +355,10 @@ abstract public class Handler<R extends AbstractDecoratedProtocolMessage, S exte
     
     protected void unsupportedProtocol(IProtocolMessage p) {
         String value = null;
-        if (uperHeaderFieldName != null) {
-            value = p.getValueAsNameValuePair(uperHeaderFieldName).getName();
+        if (upperHeaderReceiveFieldName != null) {
+            value = p.getValueAsNameValuePair(upperHeaderReceiveFieldName).getName();
         }
-        throw new UnsupportedProtocol(p, uperHeaderFieldName, value);
+        throw new UnsupportedProtocol(p, upperHeaderReceiveFieldName, value);
     }
 
     protected byte[] headerOf(final IProtocolMessage p, final boolean isHts) {
