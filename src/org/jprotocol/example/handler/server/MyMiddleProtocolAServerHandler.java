@@ -20,6 +20,7 @@ public class MyMiddleProtocolAServerHandler extends AbstractMyMiddleProtocolAHan
 
 	@Override
 	protected void makeHeader(IProtocolMessage header, IProtocolMessage payload, int headerValue) {
+		createResponse(header).getMiddleSwitch().setBitValue(headerValue);
 	}
 
 }

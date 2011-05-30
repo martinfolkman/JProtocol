@@ -1,5 +1,7 @@
 package org.jprotocol.example.handler.server;
 
+import org.jprotocol.example.api.MyLeafProtocolB_Request_API;
+import org.jprotocol.example.api.MyLeafProtocolB_Response_API;
 import org.jprotocol.example.api.MyMiddleProtocolB_Request_API;
 import org.jprotocol.example.api.MyMiddleProtocolB_Response_API;
 import org.jprotocol.example.handler.AbstractMyLeafProtocolBHandler;
@@ -24,5 +26,16 @@ public class MyLeafProtocolBServerHandler extends AbstractMyLeafProtocolBHandler
 	@Override
     protected void notifyUpperHandler(IProtocolMessage p, IUpperHandler uh) {
 	}
+    protected void unsupportedProtocol(IProtocolMessage p) {
+        //
+    }
 
+    @Override
+    protected void receiveRequest(MyLeafProtocolB_Request_API request, MyLeafProtocolB_Response_API response) {
+		if (response == null) {
+			response = createResponse();
+		}
+		sendResponse(response);
+    }
+    
 }

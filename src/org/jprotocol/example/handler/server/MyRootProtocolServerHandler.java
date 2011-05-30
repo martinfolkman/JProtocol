@@ -1,7 +1,6 @@
 package org.jprotocol.example.handler.server;
 
 import org.jprotocol.example.api.MyRootProtocol_Request_API;
-import org.jprotocol.example.api.MyRootProtocol_Response_API;
 import org.jprotocol.example.handler.AbstractMyRootProtocolHandler;
 import org.jprotocol.framework.dsl.IProtocolMessage;
 import org.jprotocol.framework.handler.IFlushable;
@@ -24,8 +23,7 @@ public class MyRootProtocolServerHandler extends AbstractMyRootProtocolHandler {
 
 	@Override
 	protected void makeHeader(IProtocolMessage header, IProtocolMessage payload, int headerValue) {
-		MyRootProtocol_Response_API response = createResponse(header);
-		//TODO
+		createResponse(header).getRootSwitchResp().setBitValue(headerValue);
 	}
 
 }
