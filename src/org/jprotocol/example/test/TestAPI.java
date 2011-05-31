@@ -10,8 +10,8 @@ public class TestAPI {
 	public final ServerFacade server;
 
 	TestAPI() {
-		FlushableProxy cf = new FlushableProxy();
-		FlushableProxy sf = new FlushableProxy();
+		FlushableClientServer cf = new FlushableClientServer();
+		FlushableClientServer sf = new FlushableClientServer();
 		client = new ClientFacade(cf).init();
 		server = new ServerFacade(sf).init();
 		cf.setTarget(server);
@@ -20,7 +20,7 @@ public class TestAPI {
 	}
 }
 
-class FlushableProxy implements IFlushable {
+class FlushableClientServer implements IFlushable {
 
 	private AbstractFacade server;
 
