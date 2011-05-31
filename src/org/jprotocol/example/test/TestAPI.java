@@ -11,8 +11,8 @@ public class TestAPI {
 	TestAPI() {
 		ClientFlushable cf = new ClientFlushable();
 		ServerFlushable sf = new ServerFlushable();
-		client = new ClientFacade(cf);
-		server = new ServerFacade(sf);
+		client = new ClientFacade(cf).init();
+		server = new ServerFacade(sf).init();
 		cf.setServer(server);
 		sf.setClient(client);
 		

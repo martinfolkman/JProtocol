@@ -9,15 +9,30 @@ import org.jprotocol.framework.handler.IFlushable;
 import org.jprotocol.framework.test.ProtocolMockery;
 
 public class ServerFacade extends AbstractServerFacade {
-	private final DefaultHandlerHierarchy hierarchy;
+	private DefaultHandlerHierarchy hierarchy;
 	private final RequestAPIFactory requestFactory;
 	private final ResponseAPIFactory responseFactory;
 
 	public ServerFacade(IFlushable flushable) {
-		hierarchy = new DefaultHandlerHierarchy(Type.Server, flushable);
+		super(flushable, Type.Server);
 		requestFactory = new RequestAPIFactory();
 		responseFactory = new ResponseAPIFactory();
 	}
+	
+	public final ServerFacade init() {
+		hierarchy = createHierarchy();
+		return this;
+	}
+	/**
+	 * Override to provide specialized hierarchy
+	 * @param type 
+	 * @param flushable
+	 * @return
+	 */
+	protected DefaultHandlerHierarchy createHierarchy() {
+		return new DefaultHandlerHierarchy(type, flushable);
+	}
+
 	public RequestAPIFactory requests() {
 		return requestFactory;
 	}
