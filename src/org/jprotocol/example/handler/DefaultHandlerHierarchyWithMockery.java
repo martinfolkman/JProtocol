@@ -13,7 +13,7 @@ public class DefaultHandlerHierarchyWithMockery extends DefaultHandlerHierarchy 
 	public DefaultHandlerHierarchyWithMockery(Type type, final IFlushable flushable) {
 		this(type, flushable, new ProtocolSnifferProxy());
 	}
-	public DefaultHandlerHierarchyWithMockery(Type type, final IFlushable flushable, ProtocolSnifferProxy sniffer) {
+	protected DefaultHandlerHierarchyWithMockery(Type type, final IFlushable flushable, ProtocolSnifferProxy sniffer) {
 		super(type, flushable, new ProtocolState(), sniffer);
 		this.mockery = new ProtocolMockery(getRoot(), new NullProtocolLogger(), true);
 		sniffer.init(mockery);
