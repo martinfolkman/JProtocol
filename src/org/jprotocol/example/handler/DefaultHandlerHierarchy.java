@@ -34,9 +34,9 @@ public class DefaultHandlerHierarchy {
 		this.protocolState = new ProtocolState();
 		this.sniffer = new ProtocolSnifferProxy();
 		this.root = createRoot(flushable);
-		init();
-		this.mockery = new ProtocolMockery(root, new NullProtocolLogger(), true);
+		this.mockery = new ProtocolMockery(getRoot(), new NullProtocolLogger(), true);
 		sniffer.init(mockery);
+		init();
 	}
 	
 	public void init() {
