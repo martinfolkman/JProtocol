@@ -1,0 +1,3 @@
+#Fri Jan 15 14:52:00 CET 2010
+eclipse.preferences.version=1
+org.eclipse.jdt.core.builder.resourceCopyExclusionFilter=*.uad,*.ucd,*.uld,*.upd,*.udd,*.uod,*.usd,*.utd,*.uud,*.odd,*.ead,*.ecd,*.eld,*.epd,*.edd,*.eod,*.esd,*.etd,*.eud,*.urd,*.ecore,*.launch,.emptyDir,*.zip,*.groovy
