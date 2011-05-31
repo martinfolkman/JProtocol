@@ -63,12 +63,18 @@ abstract public class Handler<R extends AbstractDecoratedProtocolMessage, S exte
     private S lastResponse;
     private boolean active = true;
     
-//    protected Handler(HandlerContext context) {
-//    	this(context.factory,
-//    		 context.msbFirst,
-//    		 context.u
-//    	)
-//    }
+    protected Handler(IProtocolLayoutFactory factory, HandlerContext context) {
+    	this(factory,
+    		 context.type,
+    		 context.msbFirst,
+    		 context.upperHeaderRequestFieldName,
+    		 context.upperHeaderResponseFieldName,
+    		 context.lowerHeaderRequestValue,
+    		 context.lowerHeaderResponseValue,
+    		 context.protocolState,
+    		 context.sniffer
+    	);
+    }
     
     protected Handler(IProtocolLayoutFactory factory, 
             Type type, 
