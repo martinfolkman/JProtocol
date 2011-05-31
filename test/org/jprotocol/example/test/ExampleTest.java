@@ -14,7 +14,7 @@ public class ExampleTest {
 		testApi = new TestAPI();
 	}
 	
-//	@Test
+	@Test
 	public void testA() {
 		testApi.server.expect(testApi.server.requests().MyLeafProtocolA_Request_API());
 		testApi.client.expect(testApi.client.responses().MyLeafProtocolA_Response_API());

@@ -16,14 +16,13 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jprotocol.framework.dsl.AbstractDecoratedProtocolMessage;
-import org.jprotocol.framework.dsl.IProtocolMessage;
 import org.jprotocol.framework.dsl.IProtocolLayoutFactory;
 import org.jprotocol.framework.dsl.IProtocolLayoutType;
+import org.jprotocol.framework.dsl.IProtocolMessage;
 import org.jprotocol.framework.dsl.IllegalByteArrayValue;
-import org.jprotocol.framework.dsl.ProtocolMessage;
 import org.jprotocol.framework.dsl.ProtocolException;
+import org.jprotocol.framework.dsl.ProtocolMessage;
 import org.jprotocol.framework.handler.IProtocolSniffer.InhibitException;
-
 import org.jprotocol.quantity.Quantity;
 
 
@@ -194,7 +193,12 @@ abstract public class Handler<R extends AbstractDecoratedProtocolMessage, S exte
      * @param request
      */
     protected void receiveRequest(R request, S response) {
-        //
+    	if (isLeaf()) {
+	        if (response == null) {
+	        	response = createResponse();
+	        	sendResponse(response);
+	        }
+    	}
     }
     /**
      * Override
@@ -272,6 +276,9 @@ abstract public class Handler<R extends AbstractDecoratedProtocolMessage, S exte
         return getUpperHandlerList().toArray(new IHandler[getUpperHandlerList().size()]);
     }
     
+    private boolean isLeaf() {
+    	return getUpperHandlerList().isEmpty();
+    }
     
     
 
@@ -348,7 +355,7 @@ abstract public class Handler<R extends AbstractDecoratedProtocolMessage, S exte
     protected void notifyUpperHandler(IProtocolMessage p, IUpperHandler uh) {
         if (uh != null) {
             uh.receive(payloadOf(p));
-        } else {
+        } else if (!isLeaf()) {
             unsupportedProtocol(p);
         }
     }
@@ -390,6 +397,9 @@ abstract public class Handler<R extends AbstractDecoratedProtocolMessage, S exte
             IProtocolMessage p = createSend(); 
             check(p.hasPayload());
             setPayload(p, payload);
+            if (upperHeaderSendFieldName != null) {
+            	p.setBitValue(upperHeaderSendFieldName, upperHandler.getHeaderSendValue());
+            }
             makeHeader(p, payload, upperHandler.getHeaderSendValue());
             sniffer.sniffSend(p, this);
             if (isSendStateOk(p)) {
@@ -470,9 +480,23 @@ abstract public class Handler<R extends AbstractDecoratedProtocolMessage, S exte
 //            neverGetHere();
 //        }
     }
-
-    abstract protected void flush(IProtocolMessage p);
-    abstract protected void makeHeader(IProtocolMessage header, IProtocolMessage payload, int headerValue);
+ 
+    /** 
+     * Override to provide implementation
+     * @param p
+     */
+    protected void flush(IProtocolMessage p) {
+    
+    }
+    /**
+     * Override to provide implementation
+     * @param header
+     * @param payload
+     * @param headerValue
+     */
+    protected void makeHeader(IProtocolMessage header, IProtocolMessage payload, int headerValue) {
+    	
+    }
     
     @Override public String toString() {
     	if (lowerHandler != null) {

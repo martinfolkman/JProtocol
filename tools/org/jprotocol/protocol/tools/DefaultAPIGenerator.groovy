@@ -70,12 +70,12 @@ class DefaultAPIFactoryGenerator extends JavaGenerator {
 		save(dir)
 	}
 		
-}
+} 
 class DefaultHandlerGenerator extends JavaGenerator {
 	final layout 
 	final classNameUtil
 	DefaultHandlerGenerator(layout, pack, dir) { 
-		super(pack + ".handler", "Abstract" + NameFormatter.formatName(layout.name) + "Handler")
+		super(pack + ".handler", "Default" + NameFormatter.formatName(layout.name) + "Handler")
 		this.layout = layout
 		this.classNameUtil = new ClassNameUtil(layout)
 		stdPackage()
@@ -83,10 +83,10 @@ class DefaultHandlerGenerator extends JavaGenerator {
 		line "import org.jprotocol.framework.handler.*"
 		line "import ${pack}.api.*"
 		stdJavaDoc()
-		block("abstract public class $name extends Handler<${requestApiClass}, ${responseApiClass}>") {
+		block("public class $name extends Handler<${requestApiClass}, ${responseApiClass}>") {
 			
-			block("protected ${name}(Type type, boolean msbFirst, String headerFieldName, int headerReceiveValue, int headerSendValue, IProtocolState protocolState, IProtocolSniffer sniffer)") {
-				line "super(new ${layout.class.name}(), type, msbFirst, headerFieldName, headerReceiveValue, headerSendValue, protocolState, sniffer)"
+			block("protected ${name}(Type type, boolean msbFirst, String upperHeaderRequestFieldName, String upperHeaderResponseFieldName, int lowerHeaderRequestValue, int lowerHeaderResponseValue, IProtocolState protocolState, IProtocolSniffer sniffer)") {
+				line "super(new ${layout.class.name}(), type, msbFirst, upperHeaderRequestFieldName, upperHeaderResponseFieldName, lowerHeaderRequestValue, lowerHeaderResponseValue, protocolState, sniffer)"
 			}
 		
 	
