@@ -9,14 +9,12 @@ import org.jprotocol.framework.test.ProtocolMockery;
 
 public class DefaultHandlerHierarchyWithMockery extends DefaultHandlerHierarchy {
 	
-	protected final ProtocolSnifferProxy sniffer;
 	public final ProtocolMockery mockery;
 	public DefaultHandlerHierarchyWithMockery(Type type, final IFlushable flushable) {
 		this(type, flushable, new ProtocolSnifferProxy());
 	}
 	public DefaultHandlerHierarchyWithMockery(Type type, final IFlushable flushable, ProtocolSnifferProxy sniffer) {
 		super(type, flushable, new ProtocolState(), sniffer);
-		this.sniffer = sniffer;
 		this.mockery = new ProtocolMockery(getRoot(), new NullProtocolLogger(), true);
 		sniffer.init(mockery);
 	}
