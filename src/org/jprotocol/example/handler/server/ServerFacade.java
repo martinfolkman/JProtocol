@@ -2,14 +2,14 @@ package org.jprotocol.example.handler.server;
 
 import org.jprotocol.example.api.RequestAPIFactory;
 import org.jprotocol.example.api.ResponseAPIFactory;
-import org.jprotocol.example.handler.DefaultHandlerHierarchy;
+import org.jprotocol.example.handler.DefaultHandlerHierarchyWithMockery;
 import org.jprotocol.framework.facade.AbstractServerFacade;
 import org.jprotocol.framework.handler.Handler.Type;
 import org.jprotocol.framework.handler.IFlushable;
 import org.jprotocol.framework.test.ProtocolMockery;
 
 public class ServerFacade extends AbstractServerFacade {
-	private DefaultHandlerHierarchy hierarchy;
+	private DefaultHandlerHierarchyWithMockery hierarchy;
 	private final RequestAPIFactory requestFactory;
 	private final ResponseAPIFactory responseFactory;
 
@@ -29,8 +29,8 @@ public class ServerFacade extends AbstractServerFacade {
 	 * @param flushable
 	 * @return
 	 */
-	protected DefaultHandlerHierarchy createHierarchy() {
-		return new DefaultHandlerHierarchy(type, flushable);
+	protected DefaultHandlerHierarchyWithMockery createHierarchy() {
+		return new DefaultHandlerHierarchyWithMockery(type, flushable);
 	}
 
 	public RequestAPIFactory requests() {
