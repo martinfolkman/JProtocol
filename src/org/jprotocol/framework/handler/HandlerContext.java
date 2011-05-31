@@ -11,10 +11,10 @@ public class HandlerContext {
 	public final IProtocolSniffer sniffer;
 	public final IProtocolLayoutFactory factory;
 	public final boolean msbFirst;
-	public final String upperHeaderReceiveFieldName;
-	public final String upperHeaderSendFieldName;
-	public final int headerReceiveValue;
-	public final int headerSendValue;
+	public final String upperHeaderRequestFieldName;
+	public final String upperHeaderResponseFieldName;
+	public final int lowerHeaderRequestValue;
+	public final int lowerHeaderResponseValue;
 	public HandlerContext(
 			IProtocolLayoutFactory factory, 
             Type type, 
@@ -28,18 +28,10 @@ public class HandlerContext {
 		this.factory = factory;
 		this.type = type;
 		this.msbFirst = msbFirst;
-        if (type == Type.Server) {
-            this.upperHeaderReceiveFieldName = upperHeaderRequestFieldName;
-            this.upperHeaderSendFieldName = upperHeaderResponseFieldName;
-            this.headerReceiveValue = lowerHeaderRequestValue;
-            this.headerSendValue = lowerHeaderResponseValue;
-        } else {
-        	check(type == Type.Client);
-            this.upperHeaderReceiveFieldName = upperHeaderResponseFieldName;
-            this.upperHeaderSendFieldName = upperHeaderRequestFieldName;
-            this.headerReceiveValue = lowerHeaderResponseValue;
-            this.headerSendValue = lowerHeaderRequestValue;
-        }
+        this.upperHeaderRequestFieldName = upperHeaderRequestFieldName;
+        this.upperHeaderResponseFieldName = upperHeaderResponseFieldName;
+        this.lowerHeaderRequestValue = lowerHeaderRequestValue;
+        this.lowerHeaderResponseValue = lowerHeaderResponseValue;
 		this.protocolState = protocolState;
 		this.sniffer = sniffer;
 	}
