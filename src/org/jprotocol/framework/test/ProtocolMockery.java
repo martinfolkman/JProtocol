@@ -75,8 +75,9 @@ public class ProtocolMockery implements IProtocolSniffer {
     private boolean allowRequests;
 	private final IProtocolLogger protocolLogger;
 	private final List<QualifiedName> filter = new ArrayList<QualifiedName>();
-	private final Map<String, List<IHandler>> handlerMap;
+	private Map<String, List<IHandler>> handlerMap;
 	private final boolean isServer;
+	private final IHandler root;
 	/**
 	 * 
 	 * @param root The protocol stack/handler hierarchy that is to be mocked
@@ -88,11 +89,11 @@ public class ProtocolMockery implements IProtocolSniffer {
     }
     
     public ProtocolMockery(IHandler root, IProtocolLogger protocolLogger, boolean allowMode, QualifiedName...filters) {
+    	this.root = root;
     	this.allowRequests = allowMode;
     	this.protocolLogger = protocolLogger;
     	for (QualifiedName qf: filters) this.filter.add(qf);
     	isServer = root.isServer();
-    	this.handlerMap = createHandlerMapOf(root);
     	
     }
     
@@ -376,8 +377,15 @@ public class ProtocolMockery implements IProtocolSniffer {
 		return filter.size() == 0;
 	}
 
+    private synchronized List<IHandler> handlerListOf(String protocolName) {
+    	if (handlerMap == null) {
+        	handlerMap = createHandlerMapOf(root);
+    	}
+    	return handlerMap.get(protocolName);
+    }
+    
 	private IHandler handlerOf(String protocolName, QualifiedName context) {
-		List<IHandler> l = handlerMap.get(protocolName);
+		List<IHandler> l = handlerListOf(protocolName);
 		check(notNull(l), "Cannot find protocol ", protocolName);
     	check(l.size() > 0, "Cannot find protocol ", protocolName);
     	if (l.size() == 1) {
