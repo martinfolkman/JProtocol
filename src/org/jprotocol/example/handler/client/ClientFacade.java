@@ -14,9 +14,19 @@ public class ClientFacade extends AbstractClientFacade {
 	private final ResponseAPIFactory responseFactory;
 
 	public ClientFacade(IFlushable flushable) {
-		hierarchy = new DefaultHandlerHierarchy(Type.Client, flushable);
+		hierarchy = createHierarcy(Type.Client, flushable);
 		requestFactory = new RequestAPIFactory();
 		responseFactory = new ResponseAPIFactory();
+	}
+	
+	/**
+	 * Override to provide specialized hierarchy
+	 * @param type 
+	 * @param flushable
+	 * @return
+	 */
+	protected DefaultHandlerHierarchy createHierarcy(Type type, IFlushable flushable) {
+		return new DefaultHandlerHierarchy(type, flushable);
 	}
 	public RequestAPIFactory requests() {
 		return requestFactory;
