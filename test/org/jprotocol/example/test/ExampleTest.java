@@ -7,11 +7,11 @@ import org.junit.Test;
 
 public class ExampleTest {
 
-	private TestAPI testApi;
+	private ClientServerTestFacade testApi;
 
 	@Before
 	public void before() {
-		testApi = new TestAPI();
+		testApi = new ClientServerTestFacade();
 	}
 	
 	@Test
