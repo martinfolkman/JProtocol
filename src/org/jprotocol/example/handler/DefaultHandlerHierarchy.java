@@ -13,9 +13,8 @@ import org.jprotocol.framework.dsl.IProtocolMessage;
 import org.jprotocol.framework.handler.Handler;
 import org.jprotocol.framework.handler.Handler.Type;
 import org.jprotocol.framework.handler.IFlushable;
-import org.jprotocol.framework.handler.IHandler;
-import org.jprotocol.framework.handler.IProtocolSniffer;
 import org.jprotocol.framework.handler.IProtocolState;
+import org.jprotocol.framework.handler.ProtocolSnifferProxy;
 import org.jprotocol.framework.handler.ProtocolState;
 import org.jprotocol.framework.test.IProtocolLogger.NullProtocolLogger;
 import org.jprotocol.framework.test.ProtocolMockery;
@@ -25,14 +24,14 @@ public class DefaultHandlerHierarchy {
 	protected final Type type;
 	protected final boolean msbFirst;
 	protected final IProtocolState protocolState;
-	protected final Sniffer sniffer;
+	protected final ProtocolSnifferProxy sniffer;
 	private final Handler<?, ?> root;
 	public final ProtocolMockery mockery;
 	public DefaultHandlerHierarchy(Type type, final IFlushable flushable) {
 		this.type = type;
 		this.msbFirst = false;
 		this.protocolState = new ProtocolState();
-		this.sniffer = new Sniffer();
+		this.sniffer = new ProtocolSnifferProxy();
 		this.root = new DefaultMyRootProtocolHandler(type, msbFirst, MyRootProtocol_Request_API.RootSwitch.RootSwitch_ArgName, MyRootProtocol_Response_API.RootSwitchResp.RootSwitchResp_ArgName, 0, 0, protocolState, sniffer) {
 			protected void flush(IProtocolMessage p) {
 				flushable.flush(p.getData());
@@ -71,27 +70,6 @@ public class DefaultHandlerHierarchy {
 
 	public void receive(byte[] data) {
 		root.receive(data);
-	}
-	
-}
-final class Sniffer implements IProtocolSniffer {
-	private IProtocolSniffer target;
-
-	public Sniffer() {
-	}
-
-	public void init(IProtocolSniffer sniffer) {
-		this.target = sniffer;
-	}
-
-	@Override
-	public IProtocolMessage sniff(IProtocolMessage protocol, IHandler handler) throws InhibitException {
-		return target.sniff(protocol, handler);
-	}
-
-	@Override
-	public void sniffSend(IProtocolMessage protocol, IHandler handler) {
-		target.sniffSend(protocol, handler);
 	}
 	
 }
