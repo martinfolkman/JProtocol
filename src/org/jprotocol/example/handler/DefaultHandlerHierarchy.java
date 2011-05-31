@@ -26,25 +26,21 @@ public class DefaultHandlerHierarchy {
 	protected final boolean msbFirst;
 	protected final IProtocolState protocolState;
 	protected final ProtocolSnifferProxy sniffer;
-	private final Handler<?, ?> root;
+	private final Root root;
 	public final ProtocolMockery mockery;
 	public DefaultHandlerHierarchy(Type type, final IFlushable flushable) {
 		this.type = type;
 		this.msbFirst = false;
 		this.protocolState = new ProtocolState();
 		this.sniffer = new ProtocolSnifferProxy();
-		this.root = new DefaultMyRootProtocolHandler(new HandlerContext(type, msbFirst, MyRootProtocol_Request_API.RootSwitch.RootSwitch_ArgName, MyRootProtocol_Response_API.RootSwitchResp.RootSwitchResp_ArgName, 0, 0, protocolState, sniffer)) {
-			protected void flush(IProtocolMessage p) {
-				flushable.flush(p.getData());
-			}
-		};
+		this.root = createRoot(flushable);
 		init();
 		this.mockery = new ProtocolMockery(root, new NullProtocolLogger(), true);
 		sniffer.init(mockery);
 	}
 	
 	public void init() {
-		root(createRoot(), 
+		root(getRoot(), 
 		  handler(createMiddleA(new HandlerContext(type, msbFirst, MyMiddleProtocolA_Request_API.MiddleSwitch.MiddleSwitch_ArgName, MyMiddleProtocolA_Response_API.MiddleSwitch.MiddleSwitch_ArgName, MyRootProtocol_Request_API.RootSwitch.A, MyRootProtocol_Response_API.RootSwitchResp.A, protocolState, sniffer)), 
 			handler(createLeafA(new HandlerContext(type, msbFirst, null, null, MyMiddleProtocolA_Request_API.MiddleSwitch.A, MyMiddleProtocolA_Response_API.MiddleSwitch.A, protocolState, sniffer)))
 		  ),
@@ -53,7 +49,13 @@ public class DefaultHandlerHierarchy {
 		  )
 		);
 	}
-	protected Handler<?, ?> createRoot() {
+	protected Root createRoot(IFlushable flushable) {
+		return new Root(getRootContext(), flushable);
+	}
+	protected final HandlerContext getRootContext() {
+		return new HandlerContext(type, msbFirst, MyRootProtocol_Request_API.RootSwitch.RootSwitch_ArgName, MyRootProtocol_Response_API.RootSwitchResp.RootSwitchResp_ArgName, 0, 0, protocolState, sniffer);
+	}
+	private Root getRoot() {
 		return root;
 	}
 	protected Handler<?, ?> createLeafB(HandlerContext context) {
@@ -71,6 +73,18 @@ public class DefaultHandlerHierarchy {
 
 	public void receive(byte[] data) {
 		root.receive(data);
+	}
+	public static class Root extends DefaultMyRootProtocolHandler {
+		private final IFlushable flushable;
+
+		Root(HandlerContext context, IFlushable flushable) {
+			super(context);
+			this.flushable = flushable;
+		}
+		@Override
+		protected void flush(IProtocolMessage p) {
+			flushable.flush(p.getData());
+		}
 	}
 	
 }
