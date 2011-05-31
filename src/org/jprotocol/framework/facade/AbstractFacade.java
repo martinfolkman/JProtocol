@@ -19,5 +19,11 @@ abstract public class AbstractFacade {
 	}
 
 	abstract protected ProtocolMockery getMockery();
+	
+	/**
+	 * @note This method should not be used by clients!!
+	 * @param data
+	 */
+	abstract public void receive(byte[] data);
 
 }

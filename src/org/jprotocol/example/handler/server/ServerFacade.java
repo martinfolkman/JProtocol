@@ -44,6 +44,7 @@ public class ServerFacade extends AbstractServerFacade {
 	protected ProtocolMockery getMockery() {
 		return hierarchy.mockery;
 	}
+	@Override
 	public void receive(byte[] data) {
 		hierarchy.receive(data);
 	}

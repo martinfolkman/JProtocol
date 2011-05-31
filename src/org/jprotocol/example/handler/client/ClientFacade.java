@@ -43,6 +43,7 @@ public class ClientFacade extends AbstractClientFacade {
 	protected ProtocolMockery getMockery() {
 		return hierarchy.mockery;
 	}
+	@Override
 	public void receive(byte[] data) {
 		hierarchy.receive(data);
 	}
