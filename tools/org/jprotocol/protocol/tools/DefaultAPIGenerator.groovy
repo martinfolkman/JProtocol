@@ -68,7 +68,7 @@ class DefaultAPIFactoryGenerator extends JavaGenerator {
 			} 
 		}
 		save(dir)
-	}
+	} 
 		
 } 
 class DefaultHandlerGenerator extends JavaGenerator {
@@ -85,8 +85,8 @@ class DefaultHandlerGenerator extends JavaGenerator {
 		stdJavaDoc()
 		block("public class $name extends Handler<${requestApiClass}, ${responseApiClass}>") {
 			
-			block("protected ${name}(Type type, boolean msbFirst, String upperHeaderRequestFieldName, String upperHeaderResponseFieldName, int lowerHeaderRequestValue, int lowerHeaderResponseValue, IProtocolState protocolState, IProtocolSniffer sniffer)") {
-				line "super(new ${layout.class.name}(), type, msbFirst, upperHeaderRequestFieldName, upperHeaderResponseFieldName, lowerHeaderRequestValue, lowerHeaderResponseValue, protocolState, sniffer)"
+			block("protected ${name}(HandlerContext context)") {
+				line "super(new ${layout.class.name}(), context)"
 			}
 		
 	

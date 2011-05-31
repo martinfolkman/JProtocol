@@ -7,8 +7,8 @@ import org.jprotocol.example.api.*;
 * @author eliasa01
 */
 public class DefaultMyRootProtocolHandler extends Handler<MyRootProtocol_Request_API, MyRootProtocol_Response_API> {
-    protected DefaultMyRootProtocolHandler(Type type, boolean msbFirst, String upperHeaderRequestFieldName, String upperHeaderResponseFieldName, int lowerHeaderRequestValue, int lowerHeaderResponseValue, IProtocolState protocolState, IProtocolSniffer sniffer) {
-        super(new org.jprotocol.example.dsl.MyRootProtocol(), type, msbFirst, upperHeaderRequestFieldName, upperHeaderResponseFieldName, lowerHeaderRequestValue, lowerHeaderResponseValue, protocolState, sniffer);
+    protected DefaultMyRootProtocolHandler(HandlerContext context) {
+        super(new org.jprotocol.example.dsl.MyRootProtocol(), context);
     }
     @Override public final MyRootProtocol_Request_API createRequest(IProtocolMessage p) {
         return new MyRootProtocol_Request_API(p);

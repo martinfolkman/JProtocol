@@ -7,8 +7,8 @@ import org.jprotocol.example.api.*;
 * @author eliasa01
 */
 public class DefaultMyLeafProtocolAHandler extends Handler<MyLeafProtocolA_Request_API, MyLeafProtocolA_Response_API> {
-    protected DefaultMyLeafProtocolAHandler(Type type, boolean msbFirst, String upperHeaderRequestFieldName, String upperHeaderResponseFieldName, int lowerHeaderRequestValue, int lowerHeaderResponseValue, IProtocolState protocolState, IProtocolSniffer sniffer) {
-        super(new org.jprotocol.example.dsl.MyLeafProtocolA(), type, msbFirst, upperHeaderRequestFieldName, upperHeaderResponseFieldName, lowerHeaderRequestValue, lowerHeaderResponseValue, protocolState, sniffer);
+    protected DefaultMyLeafProtocolAHandler(HandlerContext context) {
+        super(new org.jprotocol.example.dsl.MyLeafProtocolA(), context);
     }
     @Override public final MyLeafProtocolA_Request_API createRequest(IProtocolMessage p) {
         return new MyLeafProtocolA_Request_API(p);
@@ -16,5 +16,4 @@ public class DefaultMyLeafProtocolAHandler extends Handler<MyLeafProtocolA_Reque
     @Override public final MyLeafProtocolA_Response_API createResponse(IProtocolMessage p) {
         return new MyLeafProtocolA_Response_API(p);
     }
-    
 }

@@ -7,8 +7,8 @@ import org.jprotocol.example.api.*;
 * @author eliasa01
 */
 public class DefaultMyMiddleProtocolAHandler extends Handler<MyMiddleProtocolA_Request_API, MyMiddleProtocolA_Response_API> {
-    protected DefaultMyMiddleProtocolAHandler(Type type, boolean msbFirst, String upperHeaderRequestFieldName, String upperHeaderResponseFieldName, int lowerHeaderRequestValue, int lowerHeaderResponseValue, IProtocolState protocolState, IProtocolSniffer sniffer) {
-        super(new org.jprotocol.example.dsl.MyMiddleProtocolA(), type, msbFirst, upperHeaderRequestFieldName, upperHeaderResponseFieldName, lowerHeaderRequestValue, lowerHeaderResponseValue, protocolState, sniffer);
+    protected DefaultMyMiddleProtocolAHandler(HandlerContext context) {
+        super(new org.jprotocol.example.dsl.MyMiddleProtocolA(), context);
     }
     @Override public final MyMiddleProtocolA_Request_API createRequest(IProtocolMessage p) {
         return new MyMiddleProtocolA_Request_API(p);
